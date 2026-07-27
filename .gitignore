@@ -1,0 +1,23 @@
+# Visual Studio / Rider
+intermediate files
+.vs/
+.idea/
+*.sln
+*.suo
+*.opensdf
+*.VC.db
+*.VC.opendb
+
+# Unreal Engine generated folders
+Binaries/
+Build/
+DerivedDataCache/
+Intermediate/
+Saved/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Claude Code
+.claude/
