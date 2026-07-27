@@ -21,14 +21,8 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	USphereComponent* HurtboxComp;
 	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	double MovementRange = 0;
-	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	double ActorStartingLocationZ = 0;
-	
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	int MovementState = -1;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float Frequency = 0.f;

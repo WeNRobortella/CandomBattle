@@ -44,35 +44,6 @@ void ASpider_Enemy::ActivateMovement()
 		float ZOffset = FMath::Sin(Time * Frequency) * Amplitude;
 		SetActorLocation(FVector(GetActorLocation().X, GetActorLocation().Y, BaseZ + ZOffset));
 	}
-	// if (CanMove && IsAlive)
-	// {
-	// 	if (ActorStartingLocationZ >= GetActorLocation().Z && ActorStartingLocationZ - MovementRange <= GetActorLocation().Z && GetVelocity().Z == 0)
-	// 	{
-	// 		GetCharacterMovement()->Velocity.Z = GetCharacterMovement()->GetMaxSpeed() * MovementState;
-	// 	}
-	// }
-	// else
-	// {
-	// 	if (GetVelocity().Z != 0.f)
-	// 	{
-	// 		GetCharacterMovement()->StopMovementImmediately();
-	// 	}
-	// }
-	// if (ActorStartingLocationZ < GetActorLocation().Z || ActorStartingLocationZ - MovementRange > GetActorLocation().Z)
-	// {
-	// 	GetCharacterMovement()->StopMovementImmediately();
-	// 	MovementState *= -1;
-	// 	if (ActorStartingLocationZ < GetActorLocation().Z)
-	// 	{
-	// 		double MovementExcess = ActorStartingLocationZ - GetActorLocation().Z;
-	// 		SetActorLocation(FVector(GetActorLocation().X, GetActorLocation().Y, ActorStartingLocationZ + MovementExcess));
-	// 	}
-	// 	else if (ActorStartingLocationZ - MovementRange > GetActorLocation().Z)
-	// 	{
-	// 		double MovementExcess = (ActorStartingLocationZ - MovementRange) - GetActorLocation().Z;
-	// 		SetActorLocation(FVector(GetActorLocation().X, GetActorLocation().Y, (ActorStartingLocationZ - MovementRange) + MovementExcess));
-	// 	}
-	// }
 }
 
 void ASpider_Enemy::OnHurtboxBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
