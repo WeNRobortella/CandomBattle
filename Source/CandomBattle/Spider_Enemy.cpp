@@ -26,6 +26,7 @@ void ASpider_Enemy::BeginPlay()
 	HurtboxComp->OnComponentBeginOverlap.AddDynamic(this, &ASpider_Enemy::OnHurtboxBeginOverlap);
 	
 	Amplitude /= 2.f;
+	BaseZ = ActorStartingLocationZ - Amplitude;
 }
 
 void ASpider_Enemy::Tick(float DeltaTime)
@@ -40,7 +41,6 @@ void ASpider_Enemy::ActivateMovement()
 	if (CanMove && IsAlive)
 	{
 		float Time = GetWorld()->GetTimeSeconds();
-		float BaseZ = ActorStartingLocationZ - Amplitude;
 		float ZOffset = FMath::Sin(Time * Frequency) * Amplitude;
 		SetActorLocation(FVector(GetActorLocation().X, GetActorLocation().Y, BaseZ + ZOffset));
 	}

@@ -27,8 +27,7 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	double ActorStartingLocationZ = 0;
 	
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	int MovementState = -1;
+	float BaseZ = 0;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float Frequency = 0.f;
