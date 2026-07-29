@@ -21,9 +21,6 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	USphereComponent* HurtboxComp;
 	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	double MovementRange = 0;
-	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	double ActorStartingLocationZ = 0;
 	

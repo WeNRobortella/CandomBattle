@@ -5,19 +5,21 @@
 
 AAlligator_Enemy::AAlligator_Enemy()
 {
-	
+	PrimaryActorTick.bCanEverTick = true;	
 }
 
 void AAlligator_Enemy::BeginPlay()
 {
+	Super::BeginPlay();
+	
 	ActorStartingLocationX = GetActorLocation().X;
-	Amplitude /= 2;
+	Amplitude /= 2.f;
 	BaseX = ActorStartingLocationX - Amplitude;
 }
 
 void AAlligator_Enemy::Tick(float DeltaTime)
 {
-	PrimaryActorTick.bCanEverTick = true;
+	Super::Tick(DeltaTime);
 	
 	ActivateMovement();
 }
