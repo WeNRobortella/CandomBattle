@@ -24,11 +24,8 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	double ActorStartingLocationZ = 0;
 	
-<<<<<<< HEAD
-=======
 	float BaseZ = 0;
 	
->>>>>>> alligator_enemy
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float Frequency = 0.f;
 	

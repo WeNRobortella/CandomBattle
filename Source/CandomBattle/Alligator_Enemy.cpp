@@ -3,7 +3,7 @@
 
 #include "Alligator_Enemy.h"
 
-AAlligator_Enemy::AAlligator_Enemy()
+                                                                                                                                                            AAlligator_Enemy::AAlligator_Enemy()
 {
 	PrimaryActorTick.bCanEverTick = true;	
 }
