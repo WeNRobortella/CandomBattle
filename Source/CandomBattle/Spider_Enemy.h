@@ -19,7 +19,7 @@ class CANDOMBATTLE_API ASpider_Enemy : public AEnemy
 	
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	USphereComponent* HurtboxComp;
+	USphereComponent* HitboxComp;
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	double ActorStartingLocationZ = 0;
@@ -37,7 +37,7 @@ public:
 	virtual void Tick(float DeltaTime) override;
 	
 	UFUNCTION()
-	void OnHurtboxBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	void OnHitboxBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 	
 	void ActivateMovement();
 	

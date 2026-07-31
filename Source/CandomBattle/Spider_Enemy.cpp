@@ -11,8 +11,8 @@ ASpider_Enemy::ASpider_Enemy()
 {
 	PrimaryActorTick.bCanEverTick = true;
 	
-	HurtboxComp = CreateDefaultSubobject<USphereComponent>(TEXT("HurtboxComp"));
-	HurtboxComp->SetupAttachment(RootComponent);
+	HitboxComp = CreateDefaultSubobject<USphereComponent>(TEXT("HitboxComp"));
+	HitboxComp->SetupAttachment(RootComponent);
 }
 
 void ASpider_Enemy::BeginPlay()
@@ -23,7 +23,7 @@ void ASpider_Enemy::BeginPlay()
 	
 	ActorStartingLocationZ = GetActorLocation().Z;
 	
-	HurtboxComp->OnComponentBeginOverlap.AddDynamic(this, &ASpider_Enemy::OnHurtboxBeginOverlap);
+	HitboxComp->OnComponentBeginOverlap.AddDynamic(this, &ASpider_Enemy::OnHitboxBeginOverlap);
 	
 	Amplitude /= 2.f;
 	BaseZ = ActorStartingLocationZ - Amplitude;
@@ -46,7 +46,7 @@ void ASpider_Enemy::ActivateMovement()
 	}
 }
 
-void ASpider_Enemy::OnHurtboxBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+void ASpider_Enemy::OnHitboxBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	if (APlayerCharacter* Player = Cast<APlayerCharacter>(OtherActor))
 	{
@@ -58,8 +58,8 @@ bool ASpider_Enemy::ReceiveDamage(int Value)
 {
 	if (Super::ReceiveDamage(Value))
 	{
-		HurtboxComp->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-        HurtboxComp->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Ignore);
+		HitboxComp->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+        HitboxComp->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Ignore);
         
         GetAnimInstance()->JumpToNode(FName("JumpDefeat"), FName("SpiderEnemyStateMachine"));
 	}

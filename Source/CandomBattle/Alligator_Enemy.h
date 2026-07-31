@@ -4,6 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "Enemy.h"
+#include "Components/BoxComponent.h"
+
 #include "Alligator_Enemy.generated.h"
 
 /**
@@ -14,6 +16,9 @@ class CANDOMBATTLE_API AAlligator_Enemy : public AEnemy
 {
 	GENERATED_BODY()
 public:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UBoxComponent* HitBox;
+	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float Frequency = 0;
 	
@@ -29,4 +34,5 @@ public:
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
 	void ActivateMovement();
+	void UpdateDirection(float Direction);
 };
