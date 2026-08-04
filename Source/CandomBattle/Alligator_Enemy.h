@@ -17,7 +17,7 @@ class CANDOMBATTLE_API AAlligator_Enemy : public AEnemy
 	GENERATED_BODY()
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	UBoxComponent* HitBox;
+	UBoxComponent* HitboxComp;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float Frequency = 0;
@@ -28,11 +28,16 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	float ActorStartingLocationX = 0;
 	
+	float MovementTimer = 0.f;
 	float BaseX = 0;
 	
 	AAlligator_Enemy();
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
-	void ActivateMovement();
+	void ActivateMovement(float DeltaTime);
 	void UpdateDirection(float Direction);
+	bool ReceiveDamage(int value);
+	
+	UFUNCTION()
+	void OnHitBoxBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 };

@@ -19,7 +19,6 @@ enum class EEnemyState: uint8
 	Idle,
 	Patrol,
 	Chase,
-	Attack,
 	Dead
 };
 

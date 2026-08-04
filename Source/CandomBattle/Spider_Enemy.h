@@ -32,6 +32,8 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float Amplitude = 0.f;
 	
+	float MovementTimer = 0.f;
+	
 	ASpider_Enemy();
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
@@ -39,7 +41,7 @@ public:
 	UFUNCTION()
 	void OnHitboxBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 	
-	void ActivateMovement();
+	void ActivateMovement(float DeltaTime);
 	
 	virtual bool ReceiveDamage(int Value) override;
 };

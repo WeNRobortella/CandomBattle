@@ -33,15 +33,15 @@ void ASpider_Enemy::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	
-	ActivateMovement();
+	ActivateMovement(DeltaTime);
 }
 
-void ASpider_Enemy::ActivateMovement()
+void ASpider_Enemy::ActivateMovement(float DeltaTime)
 {
 	if (CanMove && IsAlive)
 	{
-		float Time = GetWorld()->GetTimeSeconds();
-		float ZOffset = FMath::Sin(Time * Frequency) * Amplitude;
+		MovementTimer += DeltaTime;
+		float ZOffset = FMath::Cos(MovementTimer * Frequency) * Amplitude;
 		SetActorLocation(FVector(GetActorLocation().X, GetActorLocation().Y, BaseZ + ZOffset));
 	}
 }

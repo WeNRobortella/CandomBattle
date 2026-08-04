@@ -2,13 +2,14 @@
 
 
 #include "Alligator_Enemy.h"
+#include "PlayerCharacter.h"
 
 AAlligator_Enemy::AAlligator_Enemy()
 {
 	PrimaryActorTick.bCanEverTick = true;
 	
-	HitBox = CreateDefaultSubobject<UBoxComponent>("HitBox");
-	HitBox->SetupAttachment(RootComponent);
+	HitboxComp = CreateDefaultSubobject<UBoxComponent>("HitBoxComp");
+	HitboxComp->SetupAttachment(RootComponent);
 }
 
 void AAlligator_Enemy::BeginPlay()
@@ -18,22 +19,24 @@ void AAlligator_Enemy::BeginPlay()
 	ActorStartingLocationX = GetActorLocation().X;
 	Amplitude /= 2.f;
 	BaseX = ActorStartingLocationX - Amplitude;
+	
+	HitboxComp->OnComponentBeginOverlap.AddDynamic(this, &AAlligator_Enemy::OnHitBoxBeginOverlap);
 }
 
 void AAlligator_Enemy::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	
-	ActivateMovement();
+	ActivateMovement(DeltaTime);
 }
 
-void AAlligator_Enemy::ActivateMovement()
+void AAlligator_Enemy::ActivateMovement(float DeltaTime)
 {
 	if (CanMove && IsAlive)
 	{
-		float Time = GetWorld()->GetTimeSeconds();
-		float Direction = Time * Frequency;
-		float XOffset = FMath::Sin(Direction) * Amplitude;
+		MovementTimer += DeltaTime;
+		float Direction = MovementTimer * Frequency;
+		float XOffset = FMath::Cos(Direction) * Amplitude;
 		SetActorLocation(FVector(BaseX + XOffset, GetActorLocation().Y, GetActorLocation().Z));
 		UpdateDirection(Direction);
 	}
@@ -43,7 +46,7 @@ void AAlligator_Enemy::UpdateDirection(float Direction)
 {
 	FRotator CurrentRotation = GetActorRotation();
 	Direction = FMath::Fmod(FMath::RadiansToDegrees(Direction), 360.f);
-	if (Direction > 90.f && Direction <= 270.f)
+	if (Direction > 0.f && Direction <= 180.f)
 	{
 		if (CurrentRotation.Yaw == 180.f)
 			SetActorRotation(FRotator(CurrentRotation.Pitch, 0.f, CurrentRotation.Roll));
@@ -53,4 +56,26 @@ void AAlligator_Enemy::UpdateDirection(float Direction)
 		if (CurrentRotation.Yaw == 0.f)
 			SetActorRotation(FRotator(CurrentRotation.Pitch, 180.f, CurrentRotation.Roll)); 
 	}
+}
+
+void AAlligator_Enemy::OnHitBoxBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	if (APlayerCharacter* Player = Cast<APlayerCharacter>(OtherActor))
+	{
+		Player->ReceiveDamage(AttackPower, GetActorLocation());
+	}
+}
+
+bool AAlligator_Enemy::ReceiveDamage(int Value)
+{
+	if (Super::ReceiveDamage(Value))
+	{
+		HitboxComp->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+		HitboxComp->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Ignore);
+		
+		GetAnimInstance()->JumpToNode(FName("JumpDefeat"), FName("AlligatorEnemyStateMachine"));
+		
+		return true;
+	}
+	return false;
 }
