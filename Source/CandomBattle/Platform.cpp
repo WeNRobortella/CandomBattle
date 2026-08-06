@@ -16,6 +16,9 @@ APlatform::APlatform()
 	if (ArrowComp)
 		ArrowComp->SetupAttachment(RootComponent);
 	
+	MovementPath = CreateEditorOnlyDefaultSubobject<USplineComponent>(TEXT("MovementPath"));
+	MovementPath->SetupAttachment(RootComponent);
+	
 	RotationRadius = CreateEditorOnlyDefaultSubobject<USphereComponent>(FName("RotationRadius"));
 	if (RotationRadius)
 		RotationRadius->SetupAttachment(RootComponent);
@@ -31,7 +34,6 @@ APlatform::APlatform()
 	
 	FlipbookComp = CreateDefaultSubobject<UPaperFlipbookComponent>(FName("FlipbookComp"));
 	FlipbookComp->SetupAttachment(BoxComp);
-	
 }
 
 void APlatform::OnConstruction(const FTransform& Transform)
@@ -43,6 +45,15 @@ void APlatform::OnConstruction(const FTransform& Transform)
 		const FVector Relloc = BoxComp->GetRelativeLocation();
 		const float Radius = FMath::Sqrt(FMath::Square(Relloc.X) + FMath::Square(Relloc.Z));
 		RotationRadius->SetSphereRadius(Radius);
+	}
+	
+	if (MovementPath && InterpToMoveComp)
+	{
+		MovementPath->ClearSplinePoints(false);
+		for (int32 i = 0; i < InterpToMoveComp->ControlPoints.Num(); i++)
+		{
+			
+		}
 	}
 }
 

@@ -11,6 +11,7 @@
 #include "GameFramework/RotatingMovementComponent.h"
 #include "Components/ArrowComponent.h"
 #include "Components/SphereComponent.h"
+#include "Components/SplineComponent.h"
 
 #include "Platform.generated.h"
 
@@ -25,6 +26,9 @@ public:
 	
 	UPROPERTY(VisibleAnywhere)
 	UArrowComponent* ArrowComp;
+	
+	UPROPERTY(VisibleAnywhere)
+	USplineComponent* MovementPath;
 	
 	UPROPERTY(VisibleAnywhere)
 	USphereComponent* RotationRadius;
