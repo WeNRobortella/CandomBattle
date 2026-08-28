@@ -35,6 +35,8 @@ void APlayerCharacter::BeginPlay()
 		}
 	}
 	
+	GetCharacterMovement()->bEnablePhysicsInteraction = false;
+	
 	AttackOverrideEndMessenger.BindUObject(this, &APlayerCharacter::AttackOverrideEnd);
 	
 	if (PlayerHUDClass)
