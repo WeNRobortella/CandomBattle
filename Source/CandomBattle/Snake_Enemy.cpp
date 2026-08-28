@@ -103,7 +103,7 @@ void ASnake_Enemy::ActivateMovement(float DeltaTime)
 			DistanceToPlayer = StartingLocation - GetActorLocation();
 			DirectionToPlayer = DistanceToPlayer.GetSafeNormal();
 			DistanceToPlayer = DistanceToPlayer.GetAbs();
-			GetWorldTimerManager().SetTimer(AttackCooldown, this, &ASnake_Enemy::AttackRecharged, 1.f, false, 5.f);
+			GetWorldTimerManager().SetTimer(AttackCooldown, this, &ASnake_Enemy::AttackRecharged, 1.f, false, 2.f);
 		}
 	}
 }

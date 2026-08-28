@@ -40,7 +40,7 @@ void ASpider_Enemy::ActivateMovement(float DeltaTime)
 {
 	if (CanMove && IsAlive)
 	{
-		MovementTimer += DeltaTime;
+		MovementTimer = FMath::Fmod(MovementTimer + DeltaTime, (2 * UE_DOUBLE_PI) / Frequency);
 		float ZOffset = FMath::Cos(MovementTimer * Frequency) * Amplitude;
 		SetActorLocation(FVector(GetActorLocation().X, GetActorLocation().Y, BaseZ + ZOffset));
 	}

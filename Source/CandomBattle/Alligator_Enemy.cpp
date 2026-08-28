@@ -34,7 +34,7 @@ void AAlligator_Enemy::ActivateMovement(float DeltaTime)
 {
 	if (CanMove && IsAlive)
 	{
-		MovementTimer += DeltaTime;
+		MovementTimer = FMath::Fmod(MovementTimer + DeltaTime, (2 * UE_DOUBLE_PI) / Frequency);
 		float Direction = MovementTimer * Frequency;
 		float XOffset = FMath::Cos(Direction) * Amplitude;
 		SetActorLocation(FVector(BaseX + XOffset, GetActorLocation().Y, GetActorLocation().Z));
