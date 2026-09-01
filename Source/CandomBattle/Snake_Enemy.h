@@ -30,7 +30,7 @@ public:
 	UBoxComponent* HitboxComp;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float TackleSpeed;
+	float TackleSpeed = 0;
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	bool CanAttack = false;

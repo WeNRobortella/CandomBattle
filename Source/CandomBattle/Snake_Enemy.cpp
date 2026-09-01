@@ -82,28 +82,22 @@ void ASnake_Enemy::ActivateMovement(float DeltaTime)
 			SetActorLocation(FVector(GetActorLocation().X + FrameTackleSpeed * DirectionToPlayer.X, GetActorLocation().Y, GetActorLocation().Z));
 			DistanceToPlayer.X = DistanceToPlayer.X - FrameTackleSpeed * FMath::Abs(DirectionToPlayer.X);
 		}
-		else if (DistanceToPlayer.X < 0)
-		{
-			SetActorLocation(FVector(GetActorLocation().X - DistanceToPlayer.X * FMath::Sign(DirectionToPlayer.X), GetActorLocation().Y, GetActorLocation().Z));
-			DistanceToPlayer.X = 0;
-		}
 		if (DistanceToPlayer.Z > 0)
 		{
 			SetActorLocation(FVector(GetActorLocation().X, GetActorLocation().Y, GetActorLocation().Z + FrameTackleSpeed * DirectionToPlayer.Z));
 			DistanceToPlayer.Z = DistanceToPlayer.Z - FrameTackleSpeed * FMath::Abs(DirectionToPlayer.Z);
 		}
-		else if (DistanceToPlayer.Z < 0)
+		if (DistanceToPlayer.X <= 0 && DistanceToPlayer.Z <= 0 && CurrentAttackState != EAttackState::Recharge)
 		{
-			SetActorLocation(FVector(GetActorLocation().X, GetActorLocation().Y,GetActorLocation().Z - DistanceToPlayer.Z * FMath::Sign(DirectionToPlayer.Z)));
-			DistanceToPlayer.Z = 0;
-		}
-		if (DistanceToPlayer.X == 0 && DistanceToPlayer.Z == 0 && CurrentAttackState != EAttackState::Recharge)
-		{
+			SetActorLocation(FVector(GetActorLocation().X + DistanceToPlayer.X * FMath::Sign(DirectionToPlayer.X), GetActorLocation().Y, GetActorLocation().Z + DistanceToPlayer.Z * FMath::Sign(DirectionToPlayer.Z)));
 			CurrentAttackState = EAttackState::Recharge;
 			DistanceToPlayer = StartingLocation - GetActorLocation();
 			DirectionToPlayer = DistanceToPlayer.GetSafeNormal();
 			DistanceToPlayer = DistanceToPlayer.GetAbs();
-			GetWorldTimerManager().SetTimer(AttackCooldown, this, &ASnake_Enemy::AttackRecharged, 1.f, false, 2.f);
+		} else if (DistanceToPlayer.X <= 0 && DistanceToPlayer.Z <= 0 && CurrentAttackState == EAttackState::Recharge && !GetWorldTimerManager().IsTimerActive(AttackCooldown))
+		{
+			SetActorLocation(StartingLocation);
+			GetWorldTimerManager().SetTimer(AttackCooldown, this, &ASnake_Enemy::AttackRecharged, 2.f, false);
 		}
 	}
 }
